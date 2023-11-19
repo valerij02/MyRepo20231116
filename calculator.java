@@ -39,7 +39,7 @@ return text;
 String text = sc.nextLine();                     //Считывание введённой строки
 
 int num1=0;                            //1-е число
-int num2=1;                            //2-е число
+int num2=0;                            //2-е число
 int res=0;                             // Результат вычисления арабский
 String resR="$";                       // Результат вычисления римский
 char si='a';                           //Знак операции
@@ -118,11 +118,22 @@ if      (
     if (va2.equals("VIII")==true){num2=8;}
     if (va2.equals("IX")==true)  {num2=9;}       
     if (va2.equals("X")==true)   {num2=10;}
+    
+    if ((num1<1)||(num1>10)||(num2<1)||(num2>10)) {
+    // Генерирование ошибки:
+throw new MyException("Неверный формат введённого числа");    
+    }
                            //Расчёт результата
     if (si=='+') {res=num1+num2;}
     if (si=='-') {res=num1-num2;}
     if (si=='*') {res=num1*num2;}
     if (si=='/') {res=num1/num2;}
+    
+    if ((res<1)||(res>10)) {
+    // Генерирование ошибки:
+throw new MyException("Неверный формат введённого числа");    
+    }    
+    else {
                            //Присвоение значения результату-римскому
     if (res==1) {resR="I";   }
     if (res==2) {resR="II";  }
@@ -136,23 +147,13 @@ if      (
     if (res==10) {resR="X";  } 
     
     System.out.println(resR);     //Вывод на консоль результата-римский
+    }  //END else
 }             //END //Присвоение значений переменным-арабским
-else {
-    // Генерирование ошибки:
-throw new MyException("Неверный формат введённого числа");
-} 
-}
-catch(ArithmeticException eObj){
-System.out.println("\nОшибка: деление на ноль! Описание: "+eObj);
-}
-catch(MyException obj){ // Обработка ошибки
-System.out.println(obj);
-}
-
                  //END Римские цифры - расчёт
+else {
                  
                  //Арабские цифры - расчёт
-try{                 
+   
 num1=Integer.parseInt(va1);    //Получение числа из строки
 num2=Integer.parseInt(va2);    //Получение числа из строки             
                     //Получение результата-арабские
@@ -162,11 +163,16 @@ num2=Integer.parseInt(va2);    //Получение числа из строки
     if (si=='/') {res=num1/num2;}
 
 System.out.println(res);        //Вывод результата на консоль
-}
+
+}   //END else
+                 //END Арабские цифры - расчёт 
+}    //END try
 catch(ArithmeticException eObj){
 System.out.println("\nОшибка: деление на ноль! Описание: "+eObj);
 }
-                 //END Арабские цифры - расчёт 
-
-    }
+catch(MyException obj){ // Обработка ошибки
+System.out.println(obj);
 }
+}
+}
+
